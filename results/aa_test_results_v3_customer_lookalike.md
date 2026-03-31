@@ -46,18 +46,6 @@ correction_factor = promo_share_lookalike / promo_share_treatment
 corrected_uplift = raw_uplift / (1 - correction_factor)
 ```
 
-### Production accuracy benchmark
-
-In the Smart Growth Wave 1 (DE) comparison against a true A/B test:
-
-| Method | Incremental Orders | Delta vs. A/B |
-|---|---|---|
-| A/B Test (ground truth) | 8,100 | — |
-| Customer Lookalike V3 | ~7,800 | **-4%** |
-| City Lookalike V2 | 447 | -94% |
-
-V3 was the closest synthetic control to ground truth, but this comparison was at total level only — not per-segment.
-
 ---
 
 ## 2. A/A Test Methodology
