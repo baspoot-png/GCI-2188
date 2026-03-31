@@ -1,0 +1,23 @@
+# Data files — contain BQ exports and campaign data (not for version control)
+data/
+
+# External code repos
+code/
+
+# OS files
+.DS_Store
+**/.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code local settings
+.claude/

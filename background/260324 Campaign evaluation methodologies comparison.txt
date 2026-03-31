@@ -1,0 +1,493 @@
+Targeted Value CpIO alignment
+Last updated on March 2026
+How we are eliminating measurement errors and ensuring accurate CPiO across all markets.
+
+Current Campaign Evaluation Setup
+
+Standardizing campaign evaluation across markets
+Current Campaign Evaluation Setup
+1
+Smart Growth
+2
+Winback
+3
+SVP
+4
+Reactivate
+5
+Local Heroes
+AS IS
+TESTS
+Voucher Control
+Voucher Control
+Voucher Control
+City Look Alike
+PROPOSAL
+City Look Alike
+Early
+Engaged
+Dormant
+ChurnedLapsed
+New
+AUDIENCE
+PROPOSAL
+Voucher Control
+City Look Alike
+Customer Look Alike
+Smart Growth (Wave 1) - DE
+Smart Growth (Wave 2) - DE
+Winback  -UK
+Lapsed
+Prospects
+Voucher Control
+Voucher Control
+
+Campaign Analysis
+
+Overview of evaluation techniques - AB test vs. synthetic control by city, customer and partner
+AB Test
+City Lookalike 
+Customer Lookalike
+Partner Look Alike
+Truth
+Synthetic control
+The golden standard to measure causal effects of our campaigns are unbiased A/B tests
+Used within UK, DE 
+Used within NL
+
+Overview of evaluation techniques - AB test vs. synthetic control by city, customer and partner
+AB Test
+City Lookalike 
+Customer Lookalike
+Partner Look Alike
+Customers that did receive email/push in focus cities
+All customers of targeted segment in focus cities 
+Customers that did receive email/push in focus cities
+All partners in focus cities 
+Unbiased hold-out group of customers in same cities
+Cities identical to focus cities from the same country in the last 12 months (selected using KNN)
+For each treatment customer, look alikes are found outside the focus cities in last 12 months
+For each partner in focus city, look alikes are found outside the focus cities in last 12 months
+Treatment definition
+Control definition
+Golden Truth 
+Significance and incrementality often change with multiple runs because of bayesian uncertainty
+Control cities are fixed before Q5, may diverge over time
+Overlap and double counting of other campaigns
+Customers could have look alikes from cities with completely different dynamics 
+Not possible for customers without order history (new, reactivated, churned)
+
+Next step: add geographical + density matching conditions
+Partners from different cuisine types, different price points and different competitiveness could be matched 
+More usable at total order level, less at segment level 
+Next step: add geographical + density + cuisine matching conditions
+Considerations
+
+None of the methodologies provide results that are reliable enough (partner look alike tbd)
+AB Test
+(Ground Truth)
+Incr. orders
+City Lookalike
+Customer Lookalike
+Partner Look Alike
+8.1K
+Smart Growth (Wave 1) - DE
+Smart Growth (Wave 2) - DE
+Winback UK
+Difference with A/B test
+Incr. orders
+Difference with A/B test
+Incr. orders
+Difference with A/B test
+-
+2.2K
+-
+4.0K
+-
+22.4K
++14.3K
+21.4K
++19.2K
+0.0K
+-4.0K
+3.1K
+-5.1K
+0
+-2.2K
+2.2K
+-1.8K
+To be added
+Look alike script
+
+Proposed next steps 
+Phase 1: Accuracy Benchmarking
+A/A Testing for each of the evaluation techniques: Run historical simulations to confirm zero-bias during non-testing periods
+Map previous A/B tests to synthetic techniques to quantify the "Bias Gap". 
+
+
+
+Pragmatic Phased Improvement process with continuous alignment
+Phase 2: matching optimization and evaluation technique selection
+Optimize current techniques with quantifiable performance measures. For example: 
+customer and partner matching on city selection (output of city look alike) to limit geographical bias
+Customer matching on similar predicted orders in the future 
+
+
+Phase 3: Experimentation Logic Upgrade & Automation
+
+Automated evaluation pipelines with checks on unbiased pre period
+Campaign input based on Google Sheets
+Global Dashboard containing all campaigns from Google Sheet input 
+!
+!
+Approx. 2 weeks (Apr 8)
+Approx. 2 weeks (Apr 22)
+tbd
+The golden standard to measure causal effects of our campaigns are unbiased A/B tests
+
+Currently we are not able to do this, but these could be enabled by connecting SERP interruptor and OMT to Braze and SFMC/ Hightouch.
+Alignment with DE, NL, UK for multiple initiatives
+Alignment with DE, NL, UK for chosen technique per segment per initiative type
+My suggestion is to frame this as the pragmatic development of a  second best, through a phased development process.
+
+For example:
+Phase 1: Accuracy Benchmarking
+* Mandatory A/A Testing: Run historical simulations to confirm zero-bias during non-testing periods.
+* RCT Calibration: Map previous randomized trials to synthetic counterparts to quantify the "Bias Gap".
+
+Phase 2: Behavior matching optimization
+* Optimize current techniques with quantifiable performance measures
+
+Phase 3: Experimentation Logic Upgrade & Automation
+* Hard rejection of any match where pre-period bias exceeds variance threshold.
+* Apply validation scorecard, like:
+Pre-Period Bias
+A/A Placebo Error
+
+Proposed next steps 
+Optimize techniques
+Check performance for multiple AB tests (market specific): 
+Customer and partner matching on city selection (output of city look alike) to limit geographical bias
+Customer matching on similar predicted orders in the future 
+Testing different matching conditions 
+Improve Current Techniques
+Recommendations & Alignment
+Conclusions and recommendations at segment level:
+
+Discussing and checks with market analytical teams 
+Possible to evaluate Yes/No
+Recommended technique 
+Aligned approach across markets 
+Standardize and scale
+
+Automated evaluation pipelines
+Campaign input based on Google Sheets
+Global Dashboard containing all campaigns from Google Sheet input 
+
+The only way to measure the impact of our campaigns accurately is by enabling end to end experimentation 
+Connecting SERP interruptor and OMT to Braze and SFMC/ Hightouch
+!
+!
+Approx. 2 weeks (Apr 8)
+Approx. 2 weeks (Apr 22)
+tbd
+
+Smart Growth (Wave 1) - DE
+
+AB Test
+(Ground Truth)
+Incr. orders
+City Lookalike V1
+Customer Lookalike
+Campaign Analysis
+Partner Look Alike
+8.1K
+Total
+Early/Engaged
+Dormant/Churned/Lapsed
+Difference with A/B test
+Incr. orders
+Difference with A/B test
+Incr. orders
+Difference with A/B test
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+8.1K
+-
+Look alike script
+
+Smart Growth Measurement Models
+Smart Growth: sending a voucher after  .. 
+Campaign Analysis
+AB Test
+(Ground Truth)
+City Lookalike 
+Customer Lookalike
+Partner Look Alike
+Targeting 96k that receive email/push in focus cities
+All customers of targeted segment in focus cities with propensity score >X
+All customers of targeted segment in focus cities with propensity score >X
+All partners in focus cities 
+Hold-out group of 11k customers in same cities
+For each focus city, the cities that were most identical (BSTS) out of 22 other DE cities in Oct-Dec ‘25
+For each treatment customer, look alikes (KNN) are found outside the focus cities in Mar ‘25 to Mar ‘26
+For each partner in focus city, look alikes are found outside the focus cities in Mar ‘25 to Mar ‘26
+Treatment definition
+Control definition
+No selection bias
+Jan-Mar ‘26 are ignored, control cities may have diverged
+Overlap and double counting of other campaigns
+Jan-Mar ‘26 are ignored, control cities may have diverged
+Overlap and double counting of other campaigns
+Local seasonality 
+Considerations
+
+Smart Growth (Wave 1) - DE
+
+AB Test
+(Ground Truth)
+Early/Engaged
+02.01.2026 - 13.01.2026
+Customers
+Total iOV
+Delta (iOV)
+45K
+4.3k
+-3.4k
+Total
+96K
+8,1K
+City Lookalike V1
+(Monte Carlo Simulation)
+City Lookalike V2
+(Locked Audience from AB Test)
+Customer Lookalike
+(Locked Aucience from AB Test)
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+51.6K
+3.8k
+724.8K
+8.9k
++5.1k
+122K
+35K
++30.7K
+36.7K
+36
+18K
+3.9k
++0.1k
+21.9K
+3.8K
+-0.5K
+61.3K
+447
+-4.2K
+Campaign Analysis
+Slide 7
+Slide 6
+Slide 8
+Look alike script
+
+The Ground Truth: The A/B Test (96.8K Users)
+Definition: A "Static Snapshot" of exactly who we sent the voucher to on Launch Day.
+The Baseline: Uses a local Hold-out Group (10.7K users) in the same cities.
+
+
+Methodology 1: Customer Lookalike (1:1 Matching)
+The Audience: 39.9K Users (Precision Focus)
+Why the difference? We applied a "Rigor Filter" to exclude low-risk users who would have ordered anyway. By focusing only on the High-Risk (35%+) customers, we remove "organic noise."
+The Logic: Uses KNN Matching to find a "Twin" for our customers in a different city (e.g., matching a Dortmund user to a Hannover user).
+The Math: It calculates the "distance" between two people’s behaviors. It doesn't care about "trends" or "time series"; it only cares about individual similarity.
+
+ Methodology 2: City Lookalike (Audience-Locked)
+The Audience: 98.0K Users (Market Focus)
+Why the difference? It is a "Dynamic Query." It captures the 96.8K treated users PLUS ~1.2K users who organically entered the "High-Risk" segment or moved into the city during the campaign.
+The Logic: Uses Bayesian Structural Time Series (BSTS) to compare the entire city's daily sales trend against 22 other German cities to predict a "Counterfactual" baseline.
+The Math: It calculates correlations over time. It doesn't care about individual "twins"; it only cares about the relationship between city-wide trends.
+Reconciling Our Measurement Models
+Understanding the "Volume Gap" between the A/B Test and Lookalike Models
+Campaign Analysis
+
+Reconciling Our Measurement Models
+Why does Customer Look Alike find 96% of the uplift in 40% of the audience?
+1. The "Voucher Waste" Discovery (The 57k "Organic" Users)
+  
+The A/B test (Ground Truth) includes everyone, including 57k users who were "Low-Risk."
+The Reality: These 57k users are loyalists. They were going to order anyway. When we send them a voucher, they use it, but they do not drive incremental growth.
+The Math: By excluding them with our Rigor Filter (>35% Prob), we are proving that 96% of the campaign's true success came from the "High-Risk" 40k.
+
+2. The "Multiplier" Factor (Eli’s 1.5x Correction)
+The Customer Lookalike uses Contamination Multiplier (1.5x)
+Why? In the Maverick market (Dortmund/Essen), even our "Lookalikes" are influenced by the campaign's presence (advertising, local hype).
+The Correction: The 7.8k total includes a +50% "correction" to account for this contamination.
+The Comparison: Without the 1.5x multiplier, the Customer Look alike would only report ~5.2k orders. The multiplier is what brings us into alignment with the "Raw Truth" of the A/B test.
+
+3. Signal-to-Noise Ratio (The City Lookalike Failure)
+  Use the City Lookalike result as your counter-example:
+The City Lookalike V2 used 98k people (the full city volume).
+The Result: It only found 447 incremental orders (a 6% accuracy).
+The Lesson: This proves that when you include the "Noise" (the other 58k people), the mathematical model breaks. It can't "see" the 8,100 incremental orders because they are buried under the organic behavior of the 58,000 active users.
+
+Campaign Analysis
+
+Reconciling Our Measurement Models
+Why did City Lookalike V1 "over-report" by 750,000 customers?
+1. The "Open Geography" Trap (Total City vs. Targeted List)
+The Ground Truth (96.8K): This is a "Closed List." We only track the specific people who were sent the voucher.
+City Lookalike - Monte Carlo (846K): This model had No Audience Lock. It didn't look at our customer list; instead, it looked at every single person in Dortmund, Essen, and Dresden who was currently in a "High-Risk" segment.
+The Difference: This methodology captured 750,000 extra people who never received a voucher. This "Open Market" approach makes it impossible to separate our campaign's impact from general city-wide trends.
+
+2. The "Dormant Data Explosion" (The 724.8K Audience)
+The Reality: In a massive market like Germany, there are hundreds of thousands of customers who haven't ordered in years.
+The Error: V1 included all 724.8K Dormant/Churned users in its calculation. It "saw" the natural, organic return of a few thousand of these people and incorrectly attributed their orders to our voucher campaign.
+The Result: This led to a "Hallucinated Uplift" of +8.9K orders in a segment where the Ground Truth proved only +3.8K were real.
+
+3. The "Loyalist Noise" (The 122K vs. 45K Mismatch)
+The Logic: V1 measured 122K Early/Engaged customers (instead of the 45K we actually targeted).
+The Lesson: By including an extra 77,000 active loyalists, the model mistook their regular, everyday orders for "Incremental Growth." This is why V1 reported an impossible +30.7K incremental orders—it was simply counting people who were going to order anyway.
+
+Campaign Analysis
+Note on Simulation Stability & Methodology Accuracy: 
+While increasing the number of external model runs (e.g., 100x) and averaging the results is a common technique for reducing "random noise," it does not resolve the Systemic Bias identified in the City Look alike (Monte Carlo) methodology. The underlying Bayesian engine (Hamiltonian Monte Carlo) already executed thousands of internal iterations per run to find a statistically stable mean; therefore, the reported over-estimation (+35K IOV) is not a result of mathematical "jitter," but rather a fundamental failure in Audience Selection.
+
+Smart Growth - Phase 2
+AB Test
+(Ground Truth)
+Early/Engaged
+19.11.2025 - 30.11.2025
+Customers
+Total iOV
+Delta (iOV)
+…
+…
++5k
+Total
+…
+…
++30.7K
+City Lookalike
+(Monte Carlo Simulation)
+City Lookalike
+(Locked Aucience from AB Test)
+Customer Lookalike
+(Locked Aucience from AB Test)
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+…
+…
+…
+…
++5k
+…
+
+…
++5.1K
+…
+…
+…
+…
++5k
+…
+…
++982
+…
+…
++982
+Campaign Analysis
+
+Winback -UK
+AB Test
+(Ground Truth)
+Early/Engaged
+19.11.2025 - 30.11.2025
+Customers
+Total iOV
+Delta (iOV)
+…
+…
++5k
+Total
+…
+…
++30.7K
+City Lookalike
+(Monte Carlo Simulation)
+City Lookalike
+(Locked Aucience from AB Test)
+Customer Lookalike
+(Locked Aucience from AB Test)
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+Early/Engaged
+Dormant/Churned/Lapsed
+…
+…
+…
+…
++5k
+…
+
+…
++5.1K
+…
+…
+…
+…
++5k
+…
+…
++982
+…
+…
++982
+Campaign Analysis
+
+3. Recommendation
+
+Unified Evaluation
+When Control group doesn’t exist
+How is the Campaign targeting?
+Existing Customer
+Do we have historical data?
+YES
+ALWAYS use Customer Look-alike (1:1 Matching).
+New Prospect
+Do we have historical data?
+No
+Use City Look-alike
+OR No Evaluation
+Recommendation
