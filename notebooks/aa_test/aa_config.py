@@ -180,7 +180,7 @@ CITY_TREATMENT_CANDIDATES = {
     'DE': ['Dortmund', 'Dresden', 'Essen'],
     'NL': ['Amsterdam', 'Eindhoven', 'Nijmegen'],
 }
-CITY_KNN_NEIGHBORS = 25
+CITY_KNN_NEIGHBORS = 10  # Reduced from 25 — prevents OOM on Colab
 CITY_CORRELATION_THRESHOLD = 0.8
 
 # --- BQ tables ---
