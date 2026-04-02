@@ -178,7 +178,7 @@ LOOK_ALIKE_CONDITIONS_V2 = [
 # --- City Lookalike config ---
 CITY_TREATMENT_CANDIDATES = {
     'DE': ['Dortmund', 'Dresden', 'Essen'],
-    'NL': [],
+    'NL': ['Amsterdam', 'Eindhoven', 'Nijmegen'],
 }
 CITY_KNN_NEIGHBORS = 25
 CITY_CORRELATION_THRESHOLD = 0.8
