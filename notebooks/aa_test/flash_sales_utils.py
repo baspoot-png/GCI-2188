@@ -105,8 +105,7 @@ def get_hourly_orders(client, country, cities, start, end,
     city_list = ','.join([f"'{c}'" for c in cities])
     query = f"""
     SELECT
-        TIMESTAMP(DATE(fo.orderdatetime),
-                  MAKE_TIME(EXTRACT(HOUR FROM fo.orderdatetime), 0, 0)) AS order_hour,
+        TIMESTAMP_TRUNC(fo.orderdatetime, HOUR) AS order_hour,
         dr.city,
         SUM(fo.nroforders) AS totalorders
     FROM `just-data-warehouse.dwh.fact_order` AS fo
