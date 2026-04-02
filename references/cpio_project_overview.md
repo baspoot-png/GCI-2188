@@ -74,14 +74,15 @@ Uplift, incremental orders (iOV), cost, CPiO (cost per incremental order), % inc
 
 ### 2.5 Accuracy comparison (Smart Growth Wave 1 — DE)
 
-| Method                          | Incr. Orders | Delta vs. A/B |
-|---------------------------------|-------------:|:-------------:|
-| **A/B Test (Ground Truth)**     |        8,100 |       —       |
-| City Lookalike V1 (Monte Carlo) |       ~8,900 (Dormant segment alone) | Massive over-report |
-| City Lookalike V2 (Locked)      |          447 |      -94%     |
-| Customer Lookalike (Locked)     |       ~7,800 |       -4%     |
+| Method                          | Incr. Orders | Delta vs. A/B | Notes |
+|---------------------------------|-------------:|:-------------:|-------|
+| **A/B Test (Ground Truth)**     |        8,100 |       —       | Full 96k audience |
+| City Lookalike V1 (Monte Carlo) |       ~8,900 (Dormant segment alone) | Massive over-report | No audience lock |
+| City Lookalike V2 (Locked)      |          447 |      -94%     | Signal drowned by organic noise |
+| Customer Lookalike (Locked, raw)|       ~5,200 |      -36%     | On filtered 40k high-risk audience |
+| Customer Lookalike (Locked, with 1.5x multiplier) | ~7,800 | -4% | **Multiplier was tuned to match the A/B result — circular validation** |
 
-Key takeaway: Customer Lookalike with audience locking and a contamination multiplier is the closest to ground truth, but only works for existing customers with order history.
+Key takeaway: The commonly cited -4% accuracy for Customer Lookalike was achieved by (a) filtering to 40k high-risk customers and (b) applying a manually chosen 1.5x contamination multiplier calibrated against the A/B result. The raw output was -36%. This is not independent validation. Unbiased accuracy measurement requires A/A testing and RCT calibration without post-hoc tuning.
 
 ---
 

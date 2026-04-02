@@ -198,3 +198,135 @@ BASE_SEGMENTS = [
     'new', 'reactivated', 'early', 'engaged',
     'lapsing', 'dormant', 'prospect', 'churned', 'unknown',
 ]
+
+# ============================================================
+# Flash Sales A/A Configuration
+# ============================================================
+
+FLASH_SALES_TREATMENT_CITIES = {
+    'DE': ['Dortmund', 'Dresden', 'Essen'],
+}
+
+# Hour windows (Flash Sales run during specific time slots)
+FLASH_SALES_HOUR_WINDOWS = {
+    'dinner': (16, 22),   # 16:00-21:59
+    'lunch':  (11, 14),   # 11:00-13:59
+}
+FLASH_SALES_DEFAULT_WINDOW = 'dinner'
+
+# A/A test parameters
+FLASH_SALES_POST_DAYS = 2          # typical Flash Sales duration
+FLASH_SALES_PRE_WEEKS = 6          # 6 weeks pre-period at hourly resolution
+FLASH_SALES_KNN_NEIGHBORS = 25
+FLASH_SALES_CORRELATION_THRESHOLD = 0.8
+
+# Technique name for BQ results table
+FLASH_SALES_TECHNIQUE = 'FLASH_SALES_BSTS'
+
+# German public holidays to exclude from A/A windows (2025)
+FLASH_SALES_HOLIDAY_EXCLUSIONS = [
+    # Christmas / NYE block
+    ('2024-12-20', '2025-01-05'),
+    # Easter 2025
+    ('2025-04-18', '2025-04-21'),
+    # Labour Day
+    ('2025-05-01', '2025-05-01'),
+    # Ascension Day
+    ('2025-05-29', '2025-05-29'),
+    # Whit Monday
+    ('2025-06-09', '2025-06-09'),
+    # German Unity Day
+    ('2025-10-03', '2025-10-03'),
+    # Christmas / NYE block 2025
+    ('2025-12-20', '2026-01-05'),
+]
+
+
+def _build_flash_sales_aa_windows(
+    n_windows=12,
+    post_days=FLASH_SALES_POST_DAYS,
+    pre_weeks=FLASH_SALES_PRE_WEEKS,
+    holiday_exclusions=FLASH_SALES_HOLIDAY_EXCLUSIONS,
+    min_gap_days=21,
+):
+    """Generate non-overlapping fake Flash Sales A/A windows.
+
+    Picks dates evenly spread across Jan-Dec 2025, avoiding holidays
+    and ensuring at least min_gap_days between windows.
+    """
+    from datetime import date, timedelta
+
+    range_start = date(2025, 1, 15)
+    range_end = date(2025, 11, 30)
+
+    # Parse holiday ranges
+    holidays = []
+    for h_start, h_end in holiday_exclusions:
+        holidays.append((
+            _dt.strptime(h_start, '%Y-%m-%d').date(),
+            _dt.strptime(h_end, '%Y-%m-%d').date(),
+        ))
+
+    def in_holiday(d):
+        for h_start, h_end in holidays:
+            if h_start <= d <= h_end:
+                return True
+        return False
+
+    def pre_period_clean(post_start):
+        """Check that the 6-week pre-period has no holidays."""
+        pre_start = post_start - timedelta(days=pre_weeks * 7)
+        pre_end = post_start - timedelta(days=1)
+        d = pre_start
+        while d <= pre_end:
+            if in_holiday(d):
+                return False
+            d += timedelta(days=1)
+        return True
+
+    # Generate candidate dates (every day in range)
+    candidates = []
+    d = range_start
+    while d <= range_end:
+        post_end = d + timedelta(days=post_days - 1)
+        if (not in_holiday(d) and not in_holiday(post_end)
+                and pre_period_clean(d)):
+            candidates.append(d)
+        d += timedelta(days=1)
+
+    if not candidates:
+        print('WARNING: No valid Flash Sales A/A dates found.')
+        return []
+
+    # Evenly sample n_windows dates with minimum gap
+    selected = []
+    step = max(len(candidates) // n_windows, 1)
+    for i in range(0, len(candidates), step):
+        candidate = candidates[i]
+        if selected and (candidate - selected[-1]).days < min_gap_days:
+            continue
+        selected.append(candidate)
+        if len(selected) >= n_windows:
+            break
+
+    windows = []
+    for post_start in selected:
+        post_end = post_start + timedelta(days=post_days - 1)
+        pre_end = post_start - timedelta(days=1)
+        pre_start = post_start - timedelta(days=pre_weeks * 7)
+        windows.append({
+            'pre_start': pre_start.strftime('%Y-%m-%d'),
+            'pre_end': pre_end.strftime('%Y-%m-%d'),
+            'post_start': post_start.strftime('%Y-%m-%d'),
+            'post_end': post_end.strftime('%Y-%m-%d'),
+            'days': post_days,
+        })
+
+    print(f'Generated {len(windows)} Flash Sales A/A windows '
+          f'({post_days}-day post, {pre_weeks}-week pre)')
+    for w in windows:
+        print(f'  {w["post_start"]} to {w["post_end"]} '
+              f'(pre: {w["pre_start"]} to {w["pre_end"]})')
+    return windows
+
+FLASH_SALES_AA_WINDOWS = _build_flash_sales_aa_windows()

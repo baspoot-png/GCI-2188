@@ -48,15 +48,16 @@ corrected_uplift = raw_uplift / (1 - correction_factor)
 
 ### Production accuracy benchmark
 
-In the Smart Growth Wave 1 (DE) comparison against a true A/B test:
+In the Smart Growth Wave 1 (DE) comparison against a true A/B test (8,100 incremental orders):
 
-| Method | Incremental Orders | Delta vs. A/B |
-|---|---|---|
-| A/B Test (ground truth) | 8,100 | — |
-| Customer Lookalike V3 | ~7,800 | **-4%** |
-| City Lookalike V2 | 447 | -94% |
+| Method | Incremental Orders | Delta vs. A/B | Notes |
+|---|---|---|---|
+| A/B Test (ground truth) | 8,100 | — | Full 96k audience |
+| Customer Lookalike (raw) | ~5,200 | **-36%** | On filtered 40k high-risk audience |
+| Customer Lookalike (with 1.5x multiplier) | ~7,800 | -4% | Multiplier was calibrated against the A/B result — **not independent validation** |
+| City Lookalike V2 | 447 | -94% | Signal drowned by organic noise |
 
-V3 was the closest synthetic control to ground truth, but this comparison was at total level only — not per-segment.
+**Caveat:** The ~7,800 / -4% figure was produced by applying a manually chosen 1.5x contamination multiplier to the raw ~5,200 result. The multiplier was selected to bring the estimate in line with the A/B ground truth. This is circular validation and should not be cited as evidence of accuracy. Independent validation requires A/A testing and RCT calibration without post-hoc parameter tuning.
 
 ---
 
