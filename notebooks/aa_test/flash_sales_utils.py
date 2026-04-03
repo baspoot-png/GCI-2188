@@ -210,19 +210,17 @@ def check_control_contamination(client, country, cities, start, end):
 # ----------------------------------------------------------
 
 def flatten_hourly_to_sequential(pivot_df):
-    """Convert hourly pivot table to sequential integer index.
+    """Convert hourly pivot table to sequential hourly DatetimeIndex.
 
-    CausalImpact expects a regularly-spaced time series. Hourly data
-    within Flash Sales hours (e.g., 16:00-21:00) has overnight gaps.
-    This function drops the timestamp index and replaces it with
-    sequential integers, preserving the order.
-
-    Returns: (flattened_df, n_pre, n_post) — the flattened DataFrame
-    and the row counts for pre and post period identification.
+    CausalImpact expects a regularly-spaced time series with a
+    DatetimeIndex. Hourly data within Flash Sales hours (e.g.,
+    16:00-21:00) has overnight gaps. This function replaces the
+    original timestamps with a synthetic contiguous hourly index
+    starting from an arbitrary date, preserving the order.
     """
     df = pivot_df.copy()
-    df = df.reset_index(drop=True)
-    df.index = pd.RangeIndex(len(df))
+    df.index = pd.date_range(
+        start='2020-01-01', periods=len(df), freq='h')
     return df
 
 
@@ -258,11 +256,11 @@ def build_hourly_pivot(df_orders, treatment_city, controls,
     # Keep only pre + post rows (exclude any gap)
     pivot = pivot[pre_mask | post_mask]
 
-    # Flatten to sequential index
+    # Flatten to sequential hourly DatetimeIndex
     pivot = flatten_hourly_to_sequential(pivot)
 
-    pre_period = [0, n_pre - 1]
-    post_period = [n_pre, n_pre + n_post - 1]
+    pre_period = [pivot.index[0], pivot.index[n_pre - 1]]
+    post_period = [pivot.index[n_pre], pivot.index[n_pre + n_post - 1]]
 
     print(f'  Hourly pivot: {n_pre} pre + {n_post} post = '
           f'{len(pivot)} total observations')
